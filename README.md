@@ -100,11 +100,11 @@ Frontend stworzony jest w React z Vite, backend w Node.js z Express, a dane prze
    - Utworz nową baze danych bookstore,
      CREATE DATABASE bookstore;
 
-   - Po utworzeniu nowej bazy danych (bookstore), możesz zaimportować strukturę z pliku backend/bookstore_database.sql:
+   - Po utworzeniu nowej bazy danych (bookstore), możesz zaimportować strukturę z pliku backend/bookstore_schema.sql:
 
 2. Utwórz pliki .env w katalogu backend
 
-   # backend/.env
+   - backend/.env
 
    DB_USER=your_db_user
    DB_HOST=localhost
