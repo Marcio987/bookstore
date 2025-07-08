@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  @apply bg-gray-100 text-gray-900 m-0;
+}
+
+/* GŁÓWNA KLASA DLA STRON */
+.main-container {
+  @apply min-h-screen bg-white flex flex-col items-center justify-center mx-auto border-l-2 border-r-2 border-gray-300;
+}
+
+/* Stylowanie wyszukiwania */
+.search-dropdown {
+  @apply absolute left-0 mt-2 w-64 bg-white border rounded-md shadow-lg text-black z-10;
+}
+
+.search-dropdown li {
+  @apply px-4 py-2 hover:bg-gray-100 cursor-pointer;
+}
+
+.search-container {
+  @apply flex-1 flex justify-center absolute left-1/2 transform -translate-x-1/2 border rounded-lg;
+}
+
+.search-panel {
+  @apply px-4 py-2 rounded-s-lg w-80 text-black focus:outline-none focus:ring-2 focus:ring-blue-400;
+}
+
+.serach-box-view {
+  @apply absolute left-0 mt-2 w-80 bg-white border rounded-md shadow-lg text-black z-10 transition-colors duration-150;
+}
+
+.serach-box-view li {
+  @apply px-4 py-2 font-medium hover:bg-gray-100 cursor-pointer transition-colors duration-150 hover:text-blue-500;
+}
+
+.search-button {
+  @apply bg-orange-600 rounded-e-lg px-4 py-2 text-white font-medium transition-colors hover:bg-orange-400;
+}
+
+/* Nagłówek */
+.header-container {
+  @apply container bg-blue-500 text-white py-2 shadow-md w-full relative;
+}
+
+.header-box-1 {
+  @apply mx-auto my-4 flex items-center px-6 relative;
+}
+
+.header-box-2 {
+  @apply border-2 mx-2 py-4 px-2 rounded-lg bg-blue-900 flex justify-between items-center;
+}
+
+.header-title {
+  @apply text-2xl font-bold whitespace-nowrap;
+}
+
+.nav-link {
+  @apply text-white px-4 py-3 hover:bg-blue-700 font-medium rounded-lg transition-colors duration-200;
+}
+
+/* Sekcja strony kategorii*/
+.category-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.category-box {
+  @apply bg-white border-2 p-8 shadow-lg rounded-lg;
+}
+
+.category-list {
+  @apply absolute left-0 mt-2  w-56 bg-white border rounded-md shadow-lg;
+  @apply transform transition-all duration-300 ease-out origin-top;
+  @apply opacity-0 scale-y-95 -translate-y-1 invisible;
+}
+
+.group:hover .category-list {
+  @apply opacity-100 scale-y-100 translate-y-0 visible;
+}
+
+.category-list li {
+  @apply py-2 px-3 hover:bg-gray-100 rounded transition-colors duration-150;
+}
+
+.category-list a {
+  @apply block w-full font-medium text-gray-700 hover:text-blue-500;
+}
+
+/* Sekcja główna */
+.homePage-container {
+  @apply container mx-auto mt-6 px-6 text-center flex-1;
+}
+
+.section-title {
+  @apply text-2xl font-semibold my-4;
+}
+
+/* Karuzela książek */
+.carousel-container {
+  @apply container border-2 rounded-lg w-full flex items-center justify-center;
+}
+
+.carousel-box {
+  @apply my-2 w-full flex items-center justify-center;
+}
+
+.book-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+.book-card {
+  @apply bg-white border-2 p-4 rounded-lg shadow-md;
+}
+
+.book-title {
+  @apply text-lg font-semibold;
+}
+
+.book-author {
+  @apply text-gray-700;
+}
+
+.book-price {
+  @apply text-black font-semibold;
+}
+
+.add-to-cart-button {
+  @apply mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-800;
+}
+
+.arrow-button {
+  @apply text-3xl mx-2 px-2 py-2 bg-gray-300 rounded-full hover:bg-gray-400 disabled:opacity-50;
+}
+
+.homePageDescription {
+  @apply text-center p-6 bg-gray-100 rounded-lg shadow-md;
+}
+
+/* Sekcja strony kontaktu */
+.contact-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.contact-box {
+  @apply bg-white border-2 flex flex-col rounded-lg justify-center items-center p-8 shadow-lg;
+}
+
+/* Sekcja strony szczegółów książki */
+.book-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.book-box {
+  @apply bg-white border-2 flex flex-col rounded-lg justify-center items-center p-8 shadow-lg;
+}
+
+/* Sekcja strony logowania */
+.login-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.login-box {
+  @apply bg-white border-2 p-8 shadow-lg rounded-lg w-96;
+}
+
+/* Sekcja strony rejestracji */
+.register-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.register-box {
+  @apply bg-white border-2 p-8 shadow-lg rounded-lg w-96;
+}
+
+/* Sekcja strony profilu*/
+.profile-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.profile-box {
+  @apply bg-white border-2 p-8 shadow-lg rounded-lg w-96;
+}
+
+/* Sekcja strony koszyka*/
+.cart-container {
+  @apply container mx-auto mt-6 px-6 flex-1 flex justify-center items-center;
+}
+
+.cart-box {
+  @apply bg-white border-2 p-8 shadow-lg rounded-lg;
+}
+
+/* Stopka */
+.footer {
+  @apply bg-gray-300 text-black text-center py-4 mt-6 w-full;
+}
+
+.footer-container {
+  @apply container mx-auto mt-1 px-6 text-center;
+}
+
+.social-button {
+  @apply text-white py-2 rounded mt-4 mx-1 w-40 h-10;
+}
+
+.privacy-link {
+  @apply text-blue-500 hover:underline hover:text-blue-900;
+}
+
+.facebook-button {
+  @apply bg-blue-700 hover:bg-blue-900;
+}
+
+.youtube-button {
+  @apply bg-red-700 hover:bg-red-900;
+}
+
+.instagram-button {
+  @apply bg-pink-500 hover:bg-pink-900;
+}
+
+/* Panel administratora CRUD */
+
+.adminPanel-container {
+  @apply bg-gray-200 border-2 rounded-sm;
+}
