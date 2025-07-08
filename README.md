@@ -137,9 +137,9 @@ Frontend stworzony jest w React z Vite, backend w Node.js z Express, a dane prze
 
 ## Funkcjonalności
 
-- Przeglądanie listy książek według kategorii
-- Szczegóły książki ze zdjęciem, opisem i ceną
-- Wyszukiwarka książek
-- Dodawanie książek do koszyka
-- Obsługa koszyka i licznik produktów
-- Autoryzacja użytkowników (logowanie/wylogowanie)
+- przeglądanie listy książek według kategorii,
+- szczegóły książki ze zdjęciem, opisem i ceną,
+- wyszukiwarka książek,
+- dodawanie książek do koszyka,
+- obsługa koszyka i licznik produktów,
+- autoryzacja użytkowników (logowanie/wylogowanie).
