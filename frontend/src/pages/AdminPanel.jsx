@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 import { Link } from "react-router-dom";
 
 const AdminPanel = () => {
@@ -21,9 +21,7 @@ const AdminPanel = () => {
 
   const fetchBooks = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:5000/books?sort=${sortBy}&order=${sortOrder}`
-      );
+      const res = await axios.get(`/books?sort=${sortBy}&order=${sortOrder}`);
       setBooks(res.data);
     } catch (err) {
       console.error("Błąd podczas pobierania książek:", err);
@@ -57,9 +55,9 @@ const AdminPanel = () => {
 
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/books/${editId}`, formData);
+        await axios.put(`/books/${editId}`, formData);
       } else {
-        await axios.post(`http://localhost:5000/books`, formData);
+        await axios.post(`/books`, formData);
       }
 
       fetchBooks();
@@ -81,7 +79,7 @@ const AdminPanel = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/books/${id}`);
+      await axios.delete(`/books/${id}`);
       fetchBooks();
     } catch (err) {
       console.error("Błąd podczas usuwania książki:", err);

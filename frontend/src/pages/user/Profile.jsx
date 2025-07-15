@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import Header from "../../components/Header";
@@ -16,7 +16,7 @@ function Profile() {
   useEffect(() => {
     // Pobieranie książek
     axios
-      .get("http://localhost:5000/books")
+      .get("/books")
       .then((response) => setBooks(response.data))
       .catch((error) => console.error("Błąd pobierania danych:", error));
 
@@ -25,9 +25,7 @@ function Profile() {
       if (!user) return;
 
       try {
-        const response = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
-        );
+        const response = await axios.get(`/carts/count?user_id=${user.id}`);
         setCartItemsCount(response.data.count);
       } catch (error) {
         console.error("Błąd pobierania koszyka:", error);

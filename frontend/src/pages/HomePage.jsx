@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import Header from "../components/Header";
@@ -19,7 +19,7 @@ function HomePage() {
   useEffect(() => {
     // Pobieranie książek
     axios
-      .get("http://localhost:5000/books")
+      .get("/books")
       .then((response) => setBooks(response.data))
       .catch((error) => console.error("Błąd pobierania danych:", error));
 
@@ -28,9 +28,7 @@ function HomePage() {
       if (!user) return;
 
       try {
-        const response = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
-        );
+        const response = await axios.get(`/carts/count?user_id=${user.id}`);
         setCartItemsCount(response.data.count);
       } catch (error) {
         console.error("Błąd pobierania koszyka:", error);
@@ -87,9 +85,7 @@ function HomePage() {
       // 1. Sprawdź czy użytkownik ma już koszyk
       let cartResponse;
       try {
-        cartResponse = await axios.get(
-          `http://localhost:5000/carts?user_id=${user.id}`
-        );
+        cartResponse = await axios.get(`/carts?user_id=${user.id}`);
       } catch (error) {
         console.error("Błąd pobierania koszyka:", error);
         throw new Error("Nie można sprawdzić koszyka");
@@ -100,7 +96,7 @@ function HomePage() {
       if (!cartResponse.data || cartResponse.data.length === 0) {
         // 2. Jeśli nie ma koszyka - stwórz nowy
         try {
-          const newCart = await axios.post("http://localhost:5000/carts", {
+          const newCart = await axios.post("/carts", {
             user_id: user.id,
           });
           cartId = newCart.data.id;
@@ -115,7 +111,7 @@ function HomePage() {
       // 3. Dodaj produkt do koszyka
       try {
         await axios.post(
-          "http://localhost:5000/cart_items",
+          "/cart_items",
           {
             cart_id: cartId,
             book_id: bookId,
@@ -138,7 +134,7 @@ function HomePage() {
       // 4. Odśwież licznik w koszyku
       try {
         const countResponse = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
+          `/carts/count?user_id=${user.id}`
         );
         setCartItemsCount(countResponse.data.count || 0);
       } catch (error) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../axiosConfig";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useAuth } from "../context/useAuth";
@@ -19,7 +19,7 @@ function Book() {
   // Pobierz pojedynczą książkę na podstawie ID z URL
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/books/${id}`)
+      .get(`/books/${id}`)
       .then((res) => setBook(res.data))
       .catch((err) => console.error("Błąd pobierania książki:", err));
   }, [id]);
@@ -27,7 +27,7 @@ function Book() {
   // Pobierz wszystkie książki do działania wyszukiwarki
   useEffect(() => {
     axios
-      .get("http://localhost:5000/books")
+      .get("/books")
       .then((res) => {
         setBooks(res.data);
       })
@@ -47,9 +47,7 @@ function Book() {
     const fetchCartCount = async () => {
       if (!user) return;
       try {
-        const res = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
-        );
+        const res = await axios.get(`/carts/count?user_id=${user.id}`);
         setCartItemsCount(res.data.count || 0);
       } catch (err) {
         console.error("Błąd pobierania danych koszyka:", err);
@@ -72,13 +70,11 @@ function Book() {
       return;
     }
     try {
-      let cartResponse = await axios.get(
-        `http://localhost:5000/carts?user_id=${user.id}`
-      );
+      let cartResponse = await axios.get(`/carts?user_id=${user.id}`);
       let cartId;
 
       if (!cartResponse.data || cartResponse.data.length === 0) {
-        const newCart = await axios.post("http://localhost:5000/carts", {
+        const newCart = await axios.post("/carts", {
           user_id: user.id,
         });
         cartId = newCart.data.id;
@@ -86,15 +82,13 @@ function Book() {
         cartId = cartResponse.data[0].id;
       }
 
-      await axios.post("http://localhost:5000/cart_items", {
+      await axios.post("/cart_items", {
         cart_id: cartId,
         book_id: id,
         quantity: 1,
       });
 
-      const countResponse = await axios.get(
-        `http://localhost:5000/carts/count?user_id=${user.id}`
-      );
+      const countResponse = await axios.get(`/carts/count?user_id=${user.id}`);
       setCartItemsCount(countResponse.data.count || 0);
 
       alert("Produkt dodany do koszyka!");

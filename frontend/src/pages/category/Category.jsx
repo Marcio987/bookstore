@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axiosConfig";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useAuth } from "../../context/useAuth";
@@ -42,7 +42,7 @@ function Category() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/books")
+      .get("/books")
       .then((res) => setBooks(res.data))
       .catch((err) => console.error("Błąd pobierania książek:", err));
   }, []);
@@ -70,9 +70,7 @@ function Category() {
     const fetchCartCount = async () => {
       if (!user) return;
       try {
-        const res = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
-        );
+        const res = await axios.get(`/carts/count?user_id=${user.id}`);
         setCartItemsCount(res.data.count || 0);
       } catch (err) {
         console.error("Błąd pobierania danych koszyka:", err);
@@ -95,13 +93,11 @@ function Category() {
       return;
     }
     try {
-      let cartResponse = await axios.get(
-        `http://localhost:5000/carts?user_id=${user.id}`
-      );
+      let cartResponse = await axios.get(`/carts?user_id=${user.id}`);
       let cartId;
 
       if (!cartResponse.data || cartResponse.data.length === 0) {
-        const newCart = await axios.post("http://localhost:5000/carts", {
+        const newCart = await axios.post("/carts", {
           user_id: user.id,
         });
         cartId = newCart.data.id;
@@ -109,15 +105,13 @@ function Category() {
         cartId = cartResponse.data[0].id;
       }
 
-      await axios.post("http://localhost:5000/cart_items", {
+      await axios.post("/cart_items", {
         cart_id: cartId,
         book_id: bookId,
         quantity: 1,
       });
 
-      const countResponse = await axios.get(
-        `http://localhost:5000/carts/count?user_id=${user.id}`
-      );
+      const countResponse = await axios.get(`/carts/count?user_id=${user.id}`);
       setCartItemsCount(countResponse.data.count || 0);
 
       alert("Produkt dodany do koszyka!");

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../axiosConfig";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import Header from "../../components/Header";
@@ -19,7 +19,7 @@ function Cart() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/books")
+      .get("/books")
       .then((res) => setBooks(res.data))
       .catch((err) => console.error("Błąd pobierania książek:", err));
 
@@ -27,9 +27,7 @@ function Cart() {
       if (!user) return;
 
       try {
-        const cartRes = await axios.get(
-          `http://localhost:5000/carts?user_id=${user.id}`
-        );
+        const cartRes = await axios.get(`/carts?user_id=${user.id}`);
         if (cartRes.data.length === 0) {
           setCartItems([]);
           setCartItemsCount(0);
@@ -37,14 +35,10 @@ function Cart() {
         }
         const cartId = cartRes.data[0].id;
 
-        const itemsRes = await axios.get(
-          `http://localhost:5000/cart_items?cart_id=${cartId}`
-        );
+        const itemsRes = await axios.get(`/cart_items?cart_id=${cartId}`);
         setCartItems(itemsRes.data);
 
-        const countRes = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
-        );
+        const countRes = await axios.get(`/carts/count?user_id=${user.id}`);
         setCartItemsCount(countRes.data.count || 0);
       } catch (err) {
         console.error("Błąd pobierania danych koszyka:", err);
@@ -67,20 +61,14 @@ function Cart() {
 
   const handleRemove = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:5000/cart_items/${itemId}`);
-      const cartRes = await axios.get(
-        `http://localhost:5000/carts?user_id=${user.id}`
-      );
+      await axios.delete(`/cart_items/${itemId}`);
+      const cartRes = await axios.get(`/carts?user_id=${user.id}`);
       if (cartRes.data.length > 0) {
         const cartId = cartRes.data[0].id;
-        const itemsRes = await axios.get(
-          `http://localhost:5000/cart_items?cart_id=${cartId}`
-        );
+        const itemsRes = await axios.get(`/cart_items?cart_id=${cartId}`);
         setCartItems(itemsRes.data);
 
-        const countRes = await axios.get(
-          `http://localhost:5000/carts/count?user_id=${user.id}`
-        );
+        const countRes = await axios.get(`/carts/count?user_id=${user.id}`);
         setCartItemsCount(countRes.data.count || 0);
       }
     } catch (err) {
