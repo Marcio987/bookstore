@@ -41,7 +41,7 @@ export default function Header({
             className="relative hover:bg-gray-100 rounded-full transition-colors duration-200"
           >
             <img
-              src="/src/images/shopping_cart_icon.png"
+              src="/images/shopping_cart_icon.png"
               alt="Koszyk"
               className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16"
             />
@@ -80,7 +80,7 @@ export default function Header({
         <div className="md:hidden flex items-center justify-between px-4 py-2 border-t border-blue-800">
           <Link to="/cart" className="flex items-center gap-2">
             <img
-              src="/src/images/shopping_cart_icon.png"
+              src="/images/shopping_cart_icon.png"
               alt="Koszyk"
               className="w-8 h-8"
             />
