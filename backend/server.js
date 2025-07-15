@@ -126,6 +126,20 @@ app.get("/api/verify-token", async (req, res) => {
   }
 });
 
+app.get("/api/me", (req, res) => {
+  // Zakładam, że masz w req.user dane użytkownika z sesji lub z JWT po weryfikacji
+  if (req.user) {
+    res.json({
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email,
+      // inne dane, które chcesz zwrócić
+    });
+  } else {
+    res.status(401).json({ message: "Nie jesteś zalogowany" });
+  }
+});
+
 // Logowanie użytkownika
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;

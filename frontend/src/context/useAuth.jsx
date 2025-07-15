@@ -3,7 +3,6 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
 
-// Komponent AuthProvider
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
@@ -16,26 +15,29 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  // Sprawdzenie tokena przy inicjalizacji
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // Weryfikacja tokena z backendem
-      fetch("http://localhost:5000/api/verify-token", {
+      fetch("https://bookstore-7r11.onrender.com/api/verify-token", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            // Token jest nieprawidłowy – np. 401
+            throw new Error("Invalid token");
+          }
+          return res.json();
+        })
         .then((data) => {
-          if (data.valid) {
+          if (data.valid && data.user) {
             setUser(data.user);
-          } else {
-            localStorage.removeItem("token");
           }
         })
-        .catch(() => {
-          localStorage.removeItem("token");
+        .catch((err) => {
+          console.warn("Błąd weryfikacji tokena:", err.message);
+          // Nie usuwamy tokena — pozwalamy użytkownikowi próbować dalej
         });
     }
   }, []);
@@ -47,7 +49,6 @@ export function AuthProvider({ children }) {
   );
 }
 
-// Hook useAuth
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
