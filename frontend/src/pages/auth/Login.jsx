@@ -53,30 +53,33 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-        credentials: "include", // Jeśli używasz cookies
+      const response = await axios.post("/api/login", {
+        email,
+        password,
       });
 
-      const data = await response.json();
+      const data = response.data;
 
-      if (response.ok) {
-        // Zapisz token w localStorage
-        localStorage.setItem("token", data.token);
+      // Zapisz token w localStorage (jeśli używasz)
+      localStorage.setItem("token", data.token);
 
-        // Zaktualizuj kontekst autentykacji
-        login(data.user);
+      // Zaktualizuj kontekst autentykacji
+      login(data.user);
 
-        setMessage("Zalogowano pomyślnie!");
-        navigate("/");
-      } else {
-        setMessage(data.message || "Nieprawidłowe dane logowania");
-      }
+      setMessage("Zalogowano pomyślnie!");
+      navigate("/");
     } catch (error) {
-      setMessage("Błąd połączenia z serwerem");
       console.error("Login error:", error);
+
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("Błąd połączenia z serwerem");
+      }
     }
   };
 
