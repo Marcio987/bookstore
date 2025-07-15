@@ -730,7 +730,7 @@ app.delete("/users/:id", authenticateJWT, async (req, res) => {
 
 // Start serwera
 app.listen(PORT, () => {
-  console.log(`Serwer działa na http://localhost:${PORT}`);
+  console.log(`Serwer działa na https://bookstore-three-beta.vercel.app`);
   console.log(
     `Połączenie z bazą danych: ${process.env.DB_HOST}/${process.env.DB_NAME}`
   );
