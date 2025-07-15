@@ -34,7 +34,22 @@ const Carousel = ({
                   />
                   <h3 className="book-title">{book.title}</h3>
                   <p className="book-author">{book.author}</p>
-                  <p className="book-price">Cena: {book.price} zł</p>
+                  <p className="book-price">
+                    Cena:{" "}
+                    {book.promotion_price == null ? (
+                      <span>{book.price} zł</span>
+                    ) : (
+                      <>
+                        <span className="line-through text-gray-500">
+                          {book.price} zł
+                        </span>
+                        <span className="text-red-800 font-bold px-2">
+                          {book.promotion_price} zł
+                        </span>
+                      </>
+                    )}
+                  </p>
+
                   <button
                     className="add-to-cart-button"
                     onClick={() => addToCart(book.id)}
