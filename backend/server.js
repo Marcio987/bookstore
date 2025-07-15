@@ -13,6 +13,21 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const router = express.Router();
 
+const allowedOrigins = ["https://bookstore-three-beta.vercel.app/"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 // Konfiguracja połączenia z PostgreSQL
 const pool = new Pool({
   user: process.env.DB_USER,
