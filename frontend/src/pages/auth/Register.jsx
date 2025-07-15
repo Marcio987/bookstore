@@ -54,17 +54,17 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
+      const response = await axios.post("/api/register", {
+        username,
+        email,
+        password,
       });
 
-      const data = await response.json();
-      if (response.ok) {
+      if (response.status === 200) {
         setMessage("Rejestracja udana! Możesz się teraz zalogować.");
         navigate("/login");
       } else {
+        const data = response.data;
         if (data.errors) {
           setMessage(data.errors.join(" | "));
         } else if (data.message) {
@@ -75,7 +75,13 @@ function Register() {
       }
     } catch (error) {
       console.error("Błąd rejestracji:", error);
-      setMessage("Błąd serwera");
+      if (error.response?.data?.errors) {
+        setMessage(error.response.data.errors.join(" | "));
+      } else if (error.response?.data?.message) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage("Błąd serwera");
+      }
     }
   };
 
